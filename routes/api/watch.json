@@ -1,0 +1,30 @@
+{
+  "products": [
+    {
+      "name": "black and white wristwatch",
+      "description": "This black and white wristwatch is black and white.",
+      "img": "photo-1507679799987-c73779587ccf?ixlib=rb-1.2.1&auto=format&fit=crop&w=2251&q=80",
+      "price": 104.99,
+      "id": 1,
+      "stars": 3.5
+    },
+    {
+      "name": "white faced wristwatch",
+      "description": "This white faced wristwatch is white faced.",
+      "img": "photo-1508057198894-247b23fe5ade?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80",
+      "price": 174.99,
+      "id": 2,
+      "stars": 1.6666666666666667
+    },
+    {
+      "name": "stone finish analogue wristwatch",
+      "description": "This stone finish analogue wristwatch is stone, finish and analogue.",
+      "img": "photo-1507679622673-989605832e3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+      "price": 144.99,
+      "id": 3,
+      "stars": 2.75
+    }
+  ],
+  "count": 8,
+  "pageNum": 2
+}

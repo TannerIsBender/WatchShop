@@ -1,0 +1,18 @@
+main > .container {
+    margin-top: 60px;
+}
+.card-title{ text-transform: capitalize;
+}
+.sort-prop {
+    text-transform: capitalize;
+    display: inline-block;
+}
+img {
+    max-width: 100%;
+}
+.dropdown-menu {
+    width: 200px;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
