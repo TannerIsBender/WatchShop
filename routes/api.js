@@ -2,21 +2,7 @@ const express = require("express");
 // https://expressjs.com/en/guide/routing.html#express-router
 const router = express.Router();
 const watches = require("./api/watch.json");
-const sql = require("mssql");
-const sqlFetch = async (...args) => {
-  try {
-    const result = await sql.query(...args);
-    const resultingRows = result.recordsets[0];
-    return resultingRows;
-  } catch (err) {
-    const err2 = new Error(
-      "Something went wrong with that last sql query. View the call stack here and more details in the next error:"
-    );
-    console.error(err2.message);
-    console.log(err2.stack);
-    throw err;
-  }
-};
+const { sqlFetch } = require("./utils/utils");
 function getPageAndCount(usersPage, usersCount, totalItems) {
   let page, count;
   if (!usersPage) {
@@ -59,10 +45,10 @@ router.get("/products", async (req, res) => {
      `;
   const findAllCount = allProductsCount[0].count;
   let [page, count] = getPageAndCount(
-    req.query.page,
-    req.query.count,
-    // get first row of returned results
-    findAllCount
+      req.query.page,
+      req.query.count,
+      // get first row of returned results
+      findAllCount
   );
   const offset = count * (page - 1);
   const products = await sqlFetch`
@@ -77,5 +63,21 @@ router.get("/products", async (req, res) => {
     count: findAllCount,
     pageNum: Math.ceil(findAllCount / count)
   });
+});
+router.get("/me", async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    res.status(401).json({
+      error: "You are not logged in!"
+    });
+  } else {
+    res.json({
+      me: {
+        id: user.id,
+        email: user.email,
+        displayName: user.displayName
+      }
+    });
+  }
 });
 module.exports = router;
