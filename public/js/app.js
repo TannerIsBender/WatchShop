@@ -47,7 +47,7 @@ const shoppingCartData = {
 function Watch(props) {
     const watch = props.watch;
     return html`
-      <div key=${watch.id} className="col-lg-4 col-md-6 col-mb-4">
+      <div key=${watch.video_id} className="col-lg-4 col-md-6 col-mb-4">
         <div className="card h-100">
           <img
          src=${"/img/watches/" + watch.img}
@@ -55,10 +55,8 @@ function Watch(props) {
             alt="bootstraplogo"
           />
           <div className="card-body">
-            <h5 className="card-title">${watch.name}</h5>
-            <p className="card-text">${watch.description}</p>
-            <p className="card-text">$${watch.price}</p>
-            <p className="card-text">${watch.stars.toFixed(2)} stars</p>
+            <h5 className="card-title">${watch.video_title}</h5>
+            <p className="card-text">${watch.video_description}</p>
             <div
               onClick=${() =>
                 setShoppingCartQuantity(

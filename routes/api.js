@@ -54,8 +54,8 @@ router.get("/getProducts", (req, res) => {
 });
 router.get("/products", async (req, res) => {
   const allProductsCount = await sqlFetch`
-            SELECT COUNT(id) as count
-             FROM products
+            SELECT COUNT(video_id) as count
+             FROM videos
      `;
   const findAllCount = allProductsCount[0].count;
   let [page, count] = getPageAndCount(
@@ -67,8 +67,8 @@ router.get("/products", async (req, res) => {
   const offset = count * (page - 1);
   const products = await sqlFetch`
     SELECT *
-    FROM products
-    ORDER BY id
+    FROM videos
+    ORDER BY video_id
     OFFSET ${offset} ROWS
     FETCH NEXT ${count} ROWS ONLY
     `;
