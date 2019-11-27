@@ -50,6 +50,27 @@ function Watch(props) {
       <div key=${watch.video_id} className="col-lg-4 col-md-6 col-mb-4">
         <div className="card h-100">
           <img
+         src=${"/img/newsbyuspic.jpg"}
+            className="card-img-top"
+            alt="bootstraplogo"
+          />
+          <div className="card-body">
+            <h5 className="card-title">${watch.video_title}</h5>
+            <p className="card-text">${watch.video_description}</p>
+            <div className="btn btn-primary">
+              View Video
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }/*
+function Watch(props) {
+    const watch = props.watch;
+    return html`
+      <div key=${watch.video_id} className="col-lg-4 col-md-6 col-mb-4">
+        <div className="card h-100">
+          <img
          src=${"/img/watches/" + watch.img}
             className="card-img-top"
             alt="bootstraplogo"
@@ -71,7 +92,7 @@ function Watch(props) {
         </div>
       </div>
     `;
-  }
+  }*/
 
 function SortCriteria(props) {
   // The below uncommented line is the same as:
@@ -103,7 +124,7 @@ function SortingOptions(props) {
     onSortOrderChange
   } = props;
   // props to exclude from the sort
-  const propsExcludedFromSort = new Set(["id", "img"]);
+  const propsExcludedFromSort = new Set(["video_id", "img", "video_button_text"]);
   const searchableProps = Object.keys(watch)
     // filter out excluded props
     .filter(keyProperty => !propsExcludedFromSort.has(keyProperty))

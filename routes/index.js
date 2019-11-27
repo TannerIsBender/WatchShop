@@ -9,4 +9,11 @@ router.get("/", (req, res) => {
         title: "News By Us"
     })
 });
+
+router.get("/submit", function(req, res) {
+    res.render("submission", {
+        title: "Submit Page"
+    });
+});
+
 module.exports = router;
