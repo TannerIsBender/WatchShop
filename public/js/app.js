@@ -2,17 +2,6 @@ import { React, ReactDOM } from "https://unpkg.com/es-react@16.8.60/index.js";
 import htm from "https://unpkg.com/htm@2.2.1/dist/htm.mjs";
 const html = htm.bind(React.createElement);
 
-const shoppingCartData = {
-    "order": {
-        "orderId": 1,
-        "orderDate": new Date().toISOString(),
-        "total": 0,
-        "userID": 1,
-        "completed": 0
-    },
-    "cartProducts": []
-}
-
 /*function Watch(props) {
   const watch = props.watch;
   return html`
@@ -239,92 +228,11 @@ function Watches(props) {
   `;
 }
 
-function setShoppingCartQuantity(
-  cartItem,
-  updateQuantity = quantity => quantity + 1
-) {
-  const shoppingCartItem = shoppingCartData.cartProducts.find(
-    item => item.id === cartItem.id
-  );
-  if (shoppingCartItem) {
-    shoppingCartItem.quantity = updateQuantity(shoppingCartItem.quantity);
-  } else {
-    // the ... is the spread operator
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-    shoppingCartData.cartProducts.push({
-      ...cartItem,
-      quantity: updateQuantity(0)
-    });
-  }
-  setShoppingCartOrder();
-  render();
-}
-
-function setShoppingCartOrder() {
-  let total = 0;
-  for (const item of shoppingCartData.cartProducts) {
-    total += item.price * item.quantity;
-  }
-  shoppingCartData.order.total = total;
-}
-
-function ShoppingCartItem(props) {
-  const item = props.cartItem;
-  return html`
-    <div className="row p-2">
-      <img
-        style=${{ width: "100%" }}
-        src=${"https://images.unsplash.com/" + item.img}
-        alt=${item.name}
-      />
-      <div className="flex-direction-column p-2">
-        <h6 className="">${item.name}</h6>
-        <div className="text-muted">price: $${item.price}</div>
-        <div className="text-muted">quantity: ${item.quantity}</div>
-      </div>
-    </div>
-  `;
-}
-
-function ShoppingCart(props) {
-  const items = props.shoppingCart.cartProducts;
-  return html`
-    <div className="dropdown px-2">
-      <div data-toggle="dropdown" className="row align-items-center px-2">
-        <div className="fa fa-shopping-cart mx-2"></div>
-        <div
-          id="shopping-cart-toggle"
-          className="dropdown-toggle"
-          data-toggle="dropdown"
-        ></div>
-      </div>
-
-      <div
-        className="dropdown-menu dropdown-menu-right p-2"
-        aria-labelledby="dropdownMenuButton"
-      >
-        <!--Below lines are using ternary operators-->
-        <!--https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator-->
-        ${items.length > 0
-          ? `Total Price: $${props.shoppingCart.order.total}`
-          : ""}
-        ${items.length === 0 ? "No items in Cart" : ""}
-        ${items.map(
-          cartItem =>
-            html`
-              <${ShoppingCartItem} key=${cartItem.id} cartItem=${cartItem} />
-            `
-        )}
-      </div>
-    </div>
-  `;
-}
 
 function TopBar(props) {
   return html`
     <div className="row align-items-center">
       <${Search} />
-      <${ShoppingCart} shoppingCart=${props.shoppingCart} />
     </div>
   `;
 }
@@ -376,9 +284,6 @@ window.render = function render() {
     document.getElementById("displaywatchesdiv")
   );
   ReactDOM.render(
-    html`
-      <${TopBar} shoppingCart=${shoppingCartData} />
-    `,
     document.getElementById("search")
   );
 };
