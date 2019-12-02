@@ -3,12 +3,17 @@
     <form>
         <div class="form-group">
             <label for="videoTitle">Video Title</label>
-            <input type="string" class="form-control" id="videoTitle" aria-describedby="videoTitle" placeholder="Enter Video Title">
+            <input type="string" class="form-control" id="videoTitle" aria-describedby="videoTitle" placeholder="Enter Video Title" required>
             <small id="titleHelp" class="form-text text-muted">This will be the article title that links to your video.</small>
         </div>
         <div class="form-group">
             <label for="description">Video Description</label>
             <textarea class="form-control" rows="5" id="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="videoUrl">Video Url</label>
+            <input type="string" class="form-control" id="videoUrl" aria-describedby="videoUrl" placeholder="Enter Video URL" required>
+            <small id="titleHelp" class="form-text text-muted">This will be the link to your YouTube.</small>
         </div>
         <div class="form-group">
             <label for="tags">Tags</label>
