@@ -1,0 +1,15 @@
+Create table:
+
+use news_by_us;
+CREATE TABLE videos( 
+  video_id INT NOT NULL IDENTITY(1, 1),
+  video_title VARCHAR(30) NOT NULL,
+  video_button_text VARCHAR(25),
+  video_description TEXT,
+  video_upload_date DATE,
+  CONSTRAINT video_pk PRIMARY KEY (video_id)
+);
+
+
+
+
