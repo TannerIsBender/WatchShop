@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="news_by_us@data.principlesofecommerce.com" uuid="12c15b1e-d7df-4465-bead-0c24d02c1e76">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://data.principlesofecommerce.com;database=news_by_us</jdbc-url>
+    </data-source>
+  </component>
+</project>

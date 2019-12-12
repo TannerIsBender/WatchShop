@@ -39,16 +39,14 @@ function Watch(props) {
       <div key=${watch.video_id} className="col-lg-4 col-md-6 col-mb-4">
         <div className="card h-100">
           <img
-         src=${"/img/newsbyuspic.jpg"}
+         src=${"/img/news/" + watch.video_image}
             className="card-img-top"
             alt="bootstraplogo"
           />
           <div className="card-body">
             <h5 className="card-title">${watch.video_title}</h5>
             <p className="card-text">${watch.video_description}</p>
-            <div className="btn btn-primary">
-              View Video
-            </div>
+            <a href=${watch.video_url} class="btn btn-primary btn-lg active" role="button" aria-pressed="true">View Video</a>
           </div>
         </div>
       </div>

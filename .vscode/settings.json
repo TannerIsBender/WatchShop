@@ -1,5 +1,4 @@
 {
     "appService.showBuildDuringDeployPrompt": false,
-    "appService.defaultWebAppToDeploy": "/subscriptions/726e5a0f-b239-4da4-aaa7-5bbf4fcaf627/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/tbadalatowatchshop",
     "appService.deploySubpath": ""
 }
