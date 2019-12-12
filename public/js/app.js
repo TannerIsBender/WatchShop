@@ -113,7 +113,7 @@ function SortingOptions(props) {
     onSortOrderChange
   } = props;
   // props to exclude from the sort
-  const propsExcludedFromSort = new Set(["video_id", "img", "video_button_text"]);
+  const propsExcludedFromSort = new Set(["video_id", "img", "video_button_text", "video_url", "video_image"]);
   const searchableProps = Object.keys(watch)
     // filter out excluded props
     .filter(keyProperty => !propsExcludedFromSort.has(keyProperty))
