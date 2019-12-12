@@ -1,23 +1,14 @@
 import { React, ReactDOM } from "https://unpkg.com/es-react@16.8.60/index.js";
 import htm from "https://unpkg.com/htm@2.2.1/dist/htm.mjs";
 const html = htm.bind(React.createElement);
-const shoppingCartData = {
-    "order": {
-        "orderId": 1,
-        "orderDate": new Date().toISOString(),
-        "total": 0,
-        "userID": 1,
-        "completed": 0
-    },
-    "cartProducts": []
-}
-function Watch(props) {
-    const watch = props.watch;
-    return html`
+
+/*function Watch(props) {
+  const watch = props.watch;
+  return html`
     <div key=${watch.id} className="col-lg-4 col-md-6 col-mb-4">
       <div className="card h-100">
         <img
-          src=${"https://images.unsplash.com/" + watch.img}
+       src=${"https://images.unsplash.com/" + watch.img}
           className="card-img-top"
           alt="bootstraplogo"
         />
@@ -28,10 +19,10 @@ function Watch(props) {
           <p className="card-text">${watch.stars.toFixed(2)} stars</p>
           <div
             onClick=${() =>
-        setShoppingCartQuantity(
-            watch,
-            currentQuantity => currentQuantity + 1
-        )}
+              setShoppingCartQuantity(
+                watch,
+                currentQuantity => currentQuantity + 1
+              )}
             className="btn btn-primary"
           >
             Add to Cart
@@ -40,14 +31,63 @@ function Watch(props) {
       </div>
     </div>
   `;
-}
-function SortCriteria(props) {
-    // The below uncommented line is the same as:
-    // const name = props.name;
-    // const checked = props.checked
-    const { name, checked, onSortPropChange } = props;
-    const id = `sort-${name}`;
+}*/
+
+function Watch(props) {
+    const watch = props.watch;
     return html`
+      <div key=${watch.video_id} className="col-lg-4 col-md-6 col-mb-4">
+        <div className="card h-100">
+          <img
+         src=${"/img/news/" + watch.video_image}
+            className="card-img-top"
+            alt="bootstraplogo"
+          />
+          <div className="card-body">
+            <h5 className="card-title">${watch.video_title}</h5>
+            <p className="card-text">${watch.video_description}</p>
+            <a href=${watch.video_url} class="btn btn-primary btn-lg active" role="button" aria-pressed="true">View Video</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }/*
+function Watch(props) {
+    const watch = props.watch;
+    return html`
+      <div key=${watch.video_id} className="col-lg-4 col-md-6 col-mb-4">
+        <div className="card h-100">
+          <img
+         src=${"/img/watches/" + watch.img}
+            className="card-img-top"
+            alt="bootstraplogo"
+          />
+          <div className="card-body">
+            <h5 className="card-title">${watch.video_title}</h5>
+            <p className="card-text">${watch.video_description}</p>
+            <div
+              onClick=${() =>
+                setShoppingCartQuantity(
+                  watch,
+                  currentQuantity => currentQuantity + 1
+                )}
+              className="btn btn-primary"
+            >
+              Add to Cart
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }*/
+
+function SortCriteria(props) {
+  // The below uncommented line is the same as:
+  // const name = props.name;
+  // const checked = props.checked
+  const { name, checked, onSortPropChange } = props;
+  const id = `sort-${name}`;
+  return html`
     <span className="sort-prop mx-2">
       <input
         onChange=${e => onSortPropChange(e.target.checked, name)}
@@ -61,22 +101,23 @@ function SortCriteria(props) {
     </span>
   `;
 }
+
 function SortingOptions(props) {
-    const {
-        watch,
-        sortProp,
-        onSortPropChange,
-        sortOrder,
-        onSortOrderChange
-    } = props;
-    // props to exclude from the sort
-    const propsExcludedFromSort = new Set(["id", "img"]);
-    const searchableProps = Object.keys(watch)
+  const {
+    watch,
+    sortProp,
+    onSortPropChange,
+    sortOrder,
+    onSortOrderChange
+  } = props;
+  // props to exclude from the sort
+  const propsExcludedFromSort = new Set(["video_id", "img", "video_button_text", "video_url", "video_image"]);
+  const searchableProps = Object.keys(watch)
     // filter out excluded props
-        .filter(keyProperty => !propsExcludedFromSort.has(keyProperty))
-        // map the keys/props to React Components.
-        .map(
-            (keyProperty, index) => html`
+    .filter(keyProperty => !propsExcludedFromSort.has(keyProperty))
+    // map the keys/props to React Components.
+    .map(
+      (keyProperty, index) => html`
         <${SortCriteria}
           key=${keyProperty}
           name=${keyProperty}
@@ -84,8 +125,8 @@ function SortingOptions(props) {
           checked=${keyProperty === sortProp}
         />
       `
-        );
-    return html`
+    );
+  return html`
     <div className="col-md-12 row">
       <div className="col-md-6">
         Sort By:
@@ -122,38 +163,40 @@ function SortingOptions(props) {
     </div>
   `;
 }
+
 function sortWatches(watches, sortProp, sortOrder) {
-    return watches.sort((focusedWatch, alternateWatch) => {
-        const moveFocusedWatchLeft = -1,
-            moveFocusedWatchRight = 1,
-            dontMoveEitherWatch = 0;
-        if (focusedWatch[sortProp] < alternateWatch[sortProp]) {
-            if (sortOrder === "ascending") {
-                // move focusedWatch left of alternateWatch
-                return moveFocusedWatchLeft;
-            } else {
-                // move focusedWatch right of alternateWatch
-                return moveFocusedWatchRight;
-            }
-        } else if (focusedWatch[sortProp] > alternateWatch[sortProp]) {
-            if (sortOrder === "ascending") {
-                // move focusedWatch right of alternateWatch
-                return moveFocusedWatchRight;
-            } else {
-                // move focusedWatch left of alternateWatch
-                return moveFocusedWatchLeft;
-            }
-        } else {
-            // Both watches are equal don't move either.
-            return dontMoveEitherWatch;
-        }
-    });
+  return watches.sort((focusedWatch, alternateWatch) => {
+    const moveFocusedWatchLeft = -1,
+      moveFocusedWatchRight = 1,
+      dontMoveEitherWatch = 0;
+    if (focusedWatch[sortProp] < alternateWatch[sortProp]) {
+      if (sortOrder === "ascending") {
+        // move focusedWatch left of alternateWatch
+        return moveFocusedWatchLeft;
+      } else {
+        // move focusedWatch right of alternateWatch
+        return moveFocusedWatchRight;
+      }
+    } else if (focusedWatch[sortProp] > alternateWatch[sortProp]) {
+      if (sortOrder === "ascending") {
+        // move focusedWatch right of alternateWatch
+        return moveFocusedWatchRight;
+      } else {
+        // move focusedWatch left of alternateWatch
+        return moveFocusedWatchLeft;
+      }
+    } else {
+      // Both watches are equal don't move either.
+      return dontMoveEitherWatch;
+    }
+  });
 }
+
 function Watches(props) {
-    const [sortProp, setSortProp] = React.useState("name");
-    const [sortOrder, setSortOrder] = React.useState("ascending");
-    const watches = sortWatches(props.watches, sortProp, sortOrder);
-    return html`
+  const [sortProp, setSortProp] = React.useState("name");
+  const [sortOrder, setSortOrder] = React.useState("ascending");
+  const watches = sortWatches(props.watches, sortProp, sortOrder);
+  return html`
     <div className="col-12 row">
       <div className="col-12 row">
         <${SortingOptions}
@@ -161,120 +204,46 @@ function Watches(props) {
           sortProp=${sortProp}
           sortOrder=${sortOrder}
           onSortPropChange=${(isChecked, sortProperty) => {
-        if (isChecked && sortProp != sortProperty) {
-            setSortProp(sortProperty);
-        }
-    }}
+            if (isChecked && sortProp != sortProperty) {
+              setSortProp(sortProperty);
+            }
+          }}
           onSortOrderChange=${(isChecked, sortOrdering) => {
-        if (isChecked && sortOrdering != sortOrder) {
-            setSortOrder(sortOrdering);
-        }
-    }}
+            if (isChecked && sortOrdering != sortOrder) {
+              setSortOrder(sortOrdering);
+            }
+          }}
         />
       </div>
       <div className="col-12 row">
         ${watches.map(function(watch) {
-        return html`
+          return html`
             <${Watch} key=${watch.id} watch="${watch}" />
           `;
-    })}
+        })}
       </div>
     </div>
   `;
 }
-function setShoppingCartQuantity(
-    cartItem,
-    updateQuantity = quantity => quantity + 1
-) {
-    const shoppingCartItem = shoppingCartData.cartProducts.find(
-        item => item.id === cartItem.id
-    );
-    if (shoppingCartItem) {
-        shoppingCartItem.quantity = updateQuantity(shoppingCartItem.quantity);
-    } else {
-        // the ... is the spread operator
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-        shoppingCartData.cartProducts.push({
-            ...cartItem,
-            quantity: updateQuantity(0)
-        });
-    }
-    setShoppingCartOrder();
-    render();
-}
-function setShoppingCartOrder() {
-    let total = 0;
-    for (const item of shoppingCartData.cartProducts) {
-        total += item.price * item.quantity;
-    }
-    shoppingCartData.order.total = total;
-}
-function ShoppingCartItem(props) {
-    const item = props.cartItem;
-    return html`
-    <div className="row p-2">
-      <img
-        style=${{ width: "100%" }}
-        src=${"https://images.unsplash.com/" + item.img}
-        alt=${item.name}
-      />
-      <div className="flex-direction-column p-2">
-        <h6 className="">${item.name}</h6>
-        <div className="text-muted">price: $${item.price}</div>
-        <div className="text-muted">quantity: ${item.quantity}</div>
-      </div>
-    </div>
-  `;
-}
-function ShoppingCart(props) {
-    const items = props.shoppingCart.cartProducts;
-    return html`
-    <div className="dropdown px-2">
-      <div data-toggle="dropdown" className="row align-items-center px-2">
-        <div className="fa fa-shopping-cart mx-2"></div>
-        <div
-          id="shopping-cart-toggle"
-          className="dropdown-toggle"
-          data-toggle="dropdown"
-        ></div>
-      </div>
-      <div
-        className="dropdown-menu dropdown-menu-right p-2"
-        aria-labelledby="dropdownMenuButton"
-      >
-        <!--Below lines are using ternary operators-->
-        <!--https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator-->
-        ${items.length > 0
-        ? `Total Price: $${props.shoppingCart.order.total}`
-        : ""}
-        ${items.length === 0 ? "No items in Cart" : ""}
-        ${items.map(
-        cartItem =>
-            html`
-              <${ShoppingCartItem} key=${cartItem.id} cartItem=${cartItem} />
-            `
-    )}
-      </div>
-    </div>
-  `;
-}
+
+
 function TopBar(props) {
-    return html`
+  return html`
     <div className="row align-items-center">
       <${Search} />
-      <${ShoppingCart} shoppingCart=${props.shoppingCart} />
     </div>
   `;
 }
+
 function Search() {
-    const [searchTerm, setSearchTerm] = React.useState("");
-    return html`
+  const [searchTerm, setSearchTerm] = React.useState("");
+  return html`
     <form
       id="search"
       onSubmit=${e => {
         e.preventDefault();
         filterWatches(searchTerm);
-    }}
+      }}
       className="form-inline my-2 my-lg-0"
     >
       <input
@@ -294,37 +263,49 @@ function Search() {
 // create a copy of watches;
 let filteredWatches;
 function filterWatches(searchTerm) {
-    filteredWatches = watches.products.filter(watch => {
-        const lowerSearchTerm = searchTerm;
-        return (
-            watch.description.toLowerCase().includes(lowerSearchTerm) ||
-            watch.name.toLowerCase().includes(lowerSearchTerm)
-        );
-    });
-    render();
+  filteredWatches = watches.products.filter(watch => {
+    const lowerSearchTerm = searchTerm;
+    return (
+      watch.description.toLowerCase().includes(lowerSearchTerm) ||
+      watch.name.toLowerCase().includes(lowerSearchTerm)
+    );
+  });
+
+  render();
 }
+
 window.render = function render() {
-    ReactDOM.render(
-        html`
+  ReactDOM.render(
+    html`
       <${Watches} watches=${filteredWatches} />
     `,
-        document.getElementById("displaywatchesdiv")
-    );
-    ReactDOM.render(
-        html`
-      <${TopBar} shoppingCart=${shoppingCartData} />
-    `,
-        document.getElementById("search")
-    );
+    document.getElementById("displaywatchesdiv")
+  );
+  ReactDOM.render(
+    document.getElementById("search")
+  );
 };
-fetch('/api/getProducts').then(response => {
+
+/*fetch('/api/getProducts').then(response => {
     if (response.ok) {
         return response.json();
     } else {
         throw Error("Something went wrong with that request:", response.statusText);
     }
 }).then(function (data) {
-    window.watches = data;
-    filteredWatches = watches.products.slice();
-    render();
+  window.watches = data;
+  filteredWatches = watches.products.slice();
+  render();
+});*/
+
+fetch('/api/Products').then(response => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw Error("Something went wrong with that request:", response.statusText);
+    }
+}).then(function (data) {
+  window.watches = data;
+  filteredWatches = watches.products.slice();
+  render();
 });

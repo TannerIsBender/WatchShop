@@ -6,7 +6,14 @@ router.get("/", (req, res) => {
     res.render("index", {
         // This gets rendered as the browsers title
         // it is passed into the ejs page as the variable 'title'
-        title: "My Watch Shop"
+        title: "News By Us"
     })
 });
+
+router.get("/submit", function(req, res) {
+    res.render("submission", {
+        title: "Submit Page"
+    });
+});
+
 module.exports = router;
