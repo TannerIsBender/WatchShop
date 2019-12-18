@@ -50,4 +50,9 @@ router.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/");
 });
+router.get("/leaderboard", function(req, res) {
+    res.render("leaderboard", {
+        title: "Leaderboard Page",
+    });
+});
 module.exports = router;
