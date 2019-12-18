@@ -64,6 +64,32 @@ router.get("/products", async (req, res) => {
     pageNum: Math.ceil(findAllCount / count)
   });
 });
+router.get("/leaderboardUsers", async (req, res) => {
+  const allUsersCount = await sqlFetch`
+            SELECT COUNT(id) as count
+             FROM users
+     `;
+  const findAllCount = allUsersCount[0].count;
+  let [page, count] = getPageAndCount(
+      req.query.page,
+      req.query.count,
+      // get first row of returned results
+      findAllCount
+  );
+  const offset = count * (page - 1);
+  const users = await sqlFetch`
+    SELECT *
+    FROM users
+    ORDER BY id
+    OFFSET ${offset} ROWS
+    FETCH NEXT ${count} ROWS ONLY
+    `;
+  res.json({
+    users: users,
+    count: findAllCount,
+    pageNum: Math.ceil(findAllCount / count)
+  });
+});
 router.get("/me", async (req, res) => {
   const user = req.user;
   if (!user) {
